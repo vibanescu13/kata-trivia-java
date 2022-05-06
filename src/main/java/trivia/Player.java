@@ -6,6 +6,10 @@ public class Player {
 
     private int position;
 
+    private int purse;
+
+//    private boolean isInPenaltyBox;
+
     Player(String name) {
         this.name = name;
     }
