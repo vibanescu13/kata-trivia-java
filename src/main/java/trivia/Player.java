@@ -8,7 +8,7 @@ public class Player {
 
     private int purse;
 
-//    private boolean isInPenaltyBox;
+    private boolean inPenaltyBox;
 
     Player(String name) {
         this.name = name;
@@ -24,5 +24,17 @@ public class Player {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public boolean isInPenaltyBox() {
+        return inPenaltyBox;
+    }
+
+    public void enterPenaltyBox() {
+        inPenaltyBox = true;
+    }
+
+    public void exitFromPenaltyBox() {
+        inPenaltyBox = false;
     }
 }

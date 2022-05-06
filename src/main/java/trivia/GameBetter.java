@@ -10,7 +10,6 @@ public class GameBetter implements IGame {
 
     int[] places = new int[6];
     int[] purses = new int[6];
-    boolean[] inPenaltyBox = new boolean[6];
 
     List<String> popQuestions = new LinkedList<>();
     List<String> scienceQuestions = new LinkedList<>();
@@ -33,7 +32,6 @@ public class GameBetter implements IGame {
         players.add(new Player(playerName));
         places[howManyPlayers()] = 0;
         purses[howManyPlayers()] = 0;
-        inPenaltyBox[howManyPlayers()] = false;
 
         System.out.println(playerName + " was added");
         System.out.println("They are player number " + players.size());
@@ -48,9 +46,10 @@ public class GameBetter implements IGame {
         System.out.println(players.get(currentPlayer).getName() + " is the current player");
         System.out.println("They have rolled a " + roll);
 
-        if (inPenaltyBox[currentPlayer]) {
+        if (players.get(currentPlayer).isInPenaltyBox()) {
             if (roll % 2 != 0) {
-                isGettingOutOfPenaltyBox = true;
+                isGettingOutOfPenaltyBox = true; // TO DO: probably the user should get out of penalty box.
+                players.get(currentPlayer).exitFromPenaltyBox();
 
                 System.out.println(players.get(currentPlayer).getName() + " is getting out of the penalty box");
                 newPosition(roll);
@@ -106,7 +105,7 @@ public class GameBetter implements IGame {
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (inPenaltyBox[currentPlayer]) {
+        if (players.get(currentPlayer).isInPenaltyBox()) {
             if (isGettingOutOfPenaltyBox) {
                 return returnWinner();
             } else {
@@ -122,7 +121,7 @@ public class GameBetter implements IGame {
     public boolean wrongAnswer() {
         System.out.println("Question was incorrectly answered");
         System.out.println(players.get(currentPlayer).getName() + " was sent to the penalty box");
-        inPenaltyBox[currentPlayer] = true;
+        players.get(currentPlayer).enterPenaltyBox();
 
         currentPlayer++;
         if (currentPlayer == players.size()) currentPlayer = 0;
