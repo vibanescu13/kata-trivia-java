@@ -6,21 +6,29 @@ import java.util.List;
 
 // REFACTOR ME
 public class GameBetter implements IGame {
-    ArrayList<Player> players = new ArrayList<>();
 
-    int[] places = new int[6];
-    int[] purses = new int[6];
+    private static final int MAX_ROUNDS = 12;
+    private static final int MAX_QUESTIONS = 50;
+    private static final int MAX_PLAYERS = 6;
+    private static final int WINNING_VALUE = 6;
 
-    List<String> popQuestions = new LinkedList<>();
-    List<String> scienceQuestions = new LinkedList<>();
-    List<String> sportsQuestions = new LinkedList<>();
-    List<String> rockQuestions = new LinkedList<>();
 
-    int currentPlayer = 0;
-    boolean isGettingOutOfPenaltyBox;
+
+    private ArrayList<Player> players = new ArrayList<>();
+
+    private int[] places = new int[MAX_PLAYERS];
+    private int[] purses = new int[MAX_PLAYERS];
+
+    private List<String> popQuestions = new LinkedList<>();
+    private List<String> scienceQuestions = new LinkedList<>();
+    private List<String> sportsQuestions = new LinkedList<>();
+    private List<String> rockQuestions = new LinkedList<>();
+
+    private int currentPlayer = 0;
+    private boolean isGettingOutOfPenaltyBox;
 
     public GameBetter() {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < MAX_QUESTIONS; i++) {
             popQuestions.add("Pop Question " + i);
             scienceQuestions.add(("Science Question " + i));
             sportsQuestions.add(("Sports Question " + i));
@@ -76,8 +84,8 @@ public class GameBetter implements IGame {
 
     private void changePlayerPosition(int roll) {
         places[currentPlayer] += roll;
-        if (places[currentPlayer] > 11) {
-            places[currentPlayer] -= 12;
+        if (places[currentPlayer] >= MAX_ROUNDS) {
+            places[currentPlayer] -= MAX_ROUNDS;
         }
     }
 
@@ -130,7 +138,7 @@ public class GameBetter implements IGame {
 
 
     private boolean didPlayerWin() {
-        return !(purses[currentPlayer] == 6);
+        return purses[currentPlayer] != WINNING_VALUE;
     }
 
     private boolean returnWinner() {
