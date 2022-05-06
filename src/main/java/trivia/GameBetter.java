@@ -49,7 +49,7 @@ public class GameBetter implements IGame {
         if (players.get(currentPlayer).isInPenaltyBox()) {
             if (roll % 2 != 0) {
                 isGettingOutOfPenaltyBox = true; // TO DO: probably the user should get out of penalty box.
-                players.get(currentPlayer).exitFromPenaltyBox();
+                // players.get(currentPlayer).exitFromPenaltyBox();
 
                 System.out.println(players.get(currentPlayer).getName() + " is getting out of the penalty box");
                 newPosition(roll);
