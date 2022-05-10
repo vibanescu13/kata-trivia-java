@@ -7,7 +7,6 @@ import java.util.List;
 // REFACTOR ME
 public class GameBetter implements IGame {
 
-    private static final int MAX_ROUNDS = 12;
     private static final int MAX_QUESTIONS = 50;
     private static final int MAX_PLAYERS = 6;
     private static final int WINNING_VALUE = 6;
@@ -16,7 +15,6 @@ public class GameBetter implements IGame {
 
     private ArrayList<Player> players = new ArrayList<>();
 
-    private int[] places = new int[MAX_PLAYERS];
     private int[] purses = new int[MAX_PLAYERS];
 
     private List<String> popQuestions = new LinkedList<>();
@@ -38,7 +36,6 @@ public class GameBetter implements IGame {
 
     public boolean add(String playerName) {
         players.add(new Player(playerName));
-        places[howManyPlayers()] = 0;
         purses[howManyPlayers()] = 0;
 
         System.out.println(playerName + " was added");
@@ -57,7 +54,7 @@ public class GameBetter implements IGame {
         if (players.get(currentPlayer).isInPenaltyBox()) {
             if (roll % 2 != 0) {
                 isGettingOutOfPenaltyBox = true; // TO DO: probably the user should get out of penalty box.
-                // players.get(currentPlayer).exitFromPenaltyBox();
+//                 players.get(currentPlayer).exitFromPenaltyBox();
 
                 System.out.println(players.get(currentPlayer).getName() + " is getting out of the penalty box");
                 newPosition(roll);
@@ -77,16 +74,13 @@ public class GameBetter implements IGame {
 
         System.out.println(players.get(currentPlayer).getName()
                 + "'s new location is "
-                + places[currentPlayer]);
+                + players.get(currentPlayer).getPosition());
         System.out.println("The category is " + currentCategory());
         askQuestion();
     }
 
     private void changePlayerPosition(int roll) {
-        places[currentPlayer] += roll;
-        if (places[currentPlayer] >= MAX_ROUNDS) {
-            places[currentPlayer] -= MAX_ROUNDS;
-        }
+        players.get(currentPlayer).setPosition(roll);
     }
 
     // Used a new enum Class for the Question Categories
@@ -103,7 +97,7 @@ public class GameBetter implements IGame {
 
     // Reduced multiple if statements using the Modulo Operator
     private Category currentCategory() {
-        switch (places[currentPlayer] % 4){
+        switch (players.get(currentPlayer).getPosition() % 4){
             case 0: return Category.POP;
             case 1: return Category.SCIENCE;
             case 2: return Category.SPORTS;
